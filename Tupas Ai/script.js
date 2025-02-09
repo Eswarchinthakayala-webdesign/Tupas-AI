@@ -55,7 +55,7 @@ const sendButton = document.querySelector(".typing-form .input-wrapper .icon:las
                 recognition.stop();
                 voiceInputButton.classList.remove("listening");
                 setTimeout(() => {
-                    voiceInputButton.innerText = "mic"; // Ensure mic icon resets after listening stops
+                    voiceInputButton.innerText = "mic"; 
                 }, 500);
             };
         } else {
@@ -89,10 +89,10 @@ const sendButton = document.querySelector(".typing-form .input-wrapper .icon:las
                 console.log(text);
                 incomingMessageDiv.classList.remove("loading");
             
-                // Array of emojis for bullet points
+               
                 const emojis = ["🔥", "⚡", "🚀", "✅", "💡", "🌟", "🎯", "🛠️", "📌", "🔍"];
                 
-                // Step 1: Extract and replace code blocks with placeholders
+               
                 const codeBlocks = [];
                 text = text.replace(/```(\w+)?\n([\s\S]*?)```/g, (match, language, codeContent) => {
                     language = language ? language.toLowerCase() : 'plaintext';
@@ -110,15 +110,14 @@ const sendButton = document.querySelector(".typing-form .input-wrapper .icon:las
                                 <pre><code class="language-${language}">${escapeHTML(codeContent)}</code></pre>
                             </div>`
                     });
-                    return placeholder; // Replace the code block with a temporary placeholder
+                    return placeholder; 
                 });
             
-                // Step 2: Replace `*` (only outside code blocks)
+              
                 text = text.replace(/(\s)\*(\s)/g, '<br>$1✱$2');
-                const em=emojis[Math.floor(Math.random() * emojis.length)] // Replace " a * b " with " a ✱ b " to avoid breaking math expressions
-                text = text.replace(/\✱ /g, () => `<br>${em} `); // Bullet point replacement
-            
-                // Step 3: Restore code blocks
+                const em=emojis[Math.floor(Math.random() * emojis.length)] 
+                text = text.replace(/\✱ /g, () => `<br>${em} `); 
+           
                 codeBlocks.forEach(({ placeholder, content }) => {
                     text = text.replace(placeholder, content);
                 });
@@ -139,14 +138,6 @@ const sendButton = document.querySelector(".typing-form .input-wrapper .icon:las
                 localStorage.setItem("savedChats", chatList.innerHTML);
                 chatList.scrollTo(0, chatList.scrollHeight);
             };
-            
-            
-            
-            
-            
-            
-            
-            
             
             
             const escapeHTML = (str) => {
