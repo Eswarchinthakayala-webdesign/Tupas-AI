@@ -28,15 +28,17 @@ const sendButton = document.querySelector(".typing-form .icon:last-child");
         sendButton.style.display = "none";
         
         if (SpeechRecognition) {
+            
             const recognition = new SpeechRecognition();
             recognition.lang = "en-US";
             recognition.interimResults = false;
 
             voiceInputButton.addEventListener("click", () => {
                 recognition.start();
+                voiceInputButton.innerText="waves"
                 voiceInputButton.classList.add("listening");
             });
- 
+            
             recognition.onresult = (event) => {
                 typingInput.value = event.results[0][0].transcript;
             };
@@ -44,10 +46,12 @@ const sendButton = document.querySelector(".typing-form .icon:last-child");
             recognition.onspeechend = () => {
                 recognition.stop();
                 voiceInputButton.classList.remove("listening");
+                 voiceInputButton.innerText="mic"
             };
         } else {
             console.warn("Speech Recognition API not supported in this browser.");
         }
+         voiceInputButton.innerText="mic"
 
 
         const loadLocalStorageData=()=>
@@ -99,8 +103,9 @@ const sendButton = document.querySelector(".typing-form .icon:last-child");
                 });
             
                 // Step 2: Replace `*` (only outside code blocks)
-                text = text.replace(/(\s)\*(\s)/g, '<br>$1✱$2'); // Replace " a * b " with " a ✱ b " to avoid breaking math expressions
-                text = text.replace(/\* /g, () => `<br>${emojis[Math.floor(Math.random() * emojis.length)]} `); // Bullet point replacement
+                text = text.replace(/(\s)\*(\s)/g, '<br>$1✱$2');
+                const em=emojis[Math.floor(Math.random() * emojis.length)] // Replace " a * b " with " a ✱ b " to avoid breaking math expressions
+                text = text.replace(/\✱ /g, () => `<br>${em} `); // Bullet point replacement
             
                 // Step 3: Restore code blocks
                 codeBlocks.forEach(({ placeholder, content }) => {
